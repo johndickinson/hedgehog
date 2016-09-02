@@ -50,7 +50,32 @@ Developed by Sinodun IT (www.sinodun.com)
 	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
 	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-        
+    <script>
+        function enableRefresh(refreshcb) {
+            if (refreshcb.checked){
+                var time = new Date().getTime();
+                $(document.body).bind("mousemove keypress", function(e) {
+                    time = new Date().getTime();
+                });
+
+                function refresh() {
+                    if(new Date().getTime() - time >= 60000) {
+                        $('#generate').prop("disabled", false);
+                        $("#setToday").click();
+                        $("#generate").click();
+                        time = new Date().getTime();
+                        myTO = setTimeout(refresh, 10000);
+                    } else {
+                        myTO = setTimeout(refresh, 10000);
+                    }
+                }
+                myTO = setTimeout(refresh, 10000);
+            } else {
+                clearTimeout(myTO);
+            }
+        }
+
+    </script>
 </head>
 <body>
   <div class="container">
@@ -117,7 +142,8 @@ Developed by Sinodun IT (www.sinodun.com)
         <select name="plotType" id="plotType"><!-- 
         auto populated by gengraph.js
    --></select>
-        <input id="generate" name="gobutton" type="button" value="Generate Plot!">  
+        <input id="generate" name="gobutton" type="button" value="Generate Plot!">
+		<input id="refresh" name="refresh" type="checkbox" value="auto refresh" onchange="enableRefresh(this)">Auto Refresh</input>
       </div>
       <div class="sixteen columns" id="userdisplay"><!-- 
         auto populated by datetime.js
@@ -163,6 +189,9 @@ Developed by Sinodun IT (www.sinodun.com)
 
     <!-- Javascript
   ================================================== 
+
+	
+	
     <script language="javascript" type="text/javascript"
              src="/javascript/jquery/jquery.min.js"></script>
     <script language="javascript" type="text/javascript"
