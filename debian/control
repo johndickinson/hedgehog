@@ -27,8 +27,8 @@ Package: hedgehog-database
 Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
-         postgresql-9.3-ip4r,
-         postgresql-plpython-9.3,
+         postgresql-9.3-ip4r | postgresql-9.4-ip4r | postgresql-9.5-ip4r | postgresql-9.6-ip4r,
+         postgresql-plpython-9.3 | postgresql-plpython-9.4 | postgresql-plpython-9.5 | postgresql-plpython-9.6,
          python-ipy,
          libgetdns1,
          python-getdns
